@@ -2,7 +2,9 @@ let inputnumber
 let outputexpression
 let operationexpression
 let operation = ""
-console.log(2)
+let x
+let operandchanger = 0
+//Operand changer is 0 while entering numbers, 1 while entering operands and 2 when result has already been evaluated
 
 operationexpression = document.getElementById("input-display")
 operationexpression.innerHTML = ""
@@ -10,33 +12,102 @@ operationexpression.innerHTML = ""
 outputexpression = document.getElementById("output-display")
 outputexpression.innerHTML = ""
 
-let numberinputs = document.getElementsByClassName("numberinput")
-
-let x
-let operandchanger = 0
-//Operand changer is 0 while entering numbers and 1 while entering operands
-
+// Function that registers when a new number is input 
 function numberinputfunction(x) {
-    operation = operation + x.value
-    operationexpression.innerHTML = operation
-    operandchanger = 0
+    if (operandchanger != 2) {
+        operation = operation + x.value
+        operationexpression.innerHTML = operation
+        operandchanger = 0
+    }
 }
 
+// Function that registers when user clicks an operator
 function operandinputfunction(x) {
     if (operandchanger == 0) {
         operation = operation + " " + x.value + " "
         operationexpression.innerHTML = operation
         operandchanger = 1
     }
-    else {
+    else if (operandchanger == 1) {
         operation = operation.substr(0, operation.length-3)
-        console.log (operation)
         operation = operation + " " + x.value + " "
         operationexpression.innerHTML = operation
     }
 }
 
-function evaluate() {
-    operation = operation.trim();
-    
+function evalfunction() {
+    operation = operation.trim()
+    let EvArray = operation.split(" ")
+
+    // Edge-case scenario 1: When first operand is preceded by + or -, add 0 to beginning of array
+    if (EvArray[0] == "-" || EvArray[0] == "+") {
+        for (let i=EvArray.length; i>0; i--) {
+            EvArray[i] = EvArray[i-1]
+        }
+        EvArray[0] = "0"
+    }
+
+    // Edge-case scenario 2: When user types operator at end, remove it
+    if (EvArray[EvArray.length-1] == "/" || EvArray[EvArray.length-1] == "x" || EvArray[EvArray.length-1] == "-" || EvArray[EvArray.length-1] == "+") {
+        EvArray.pop()
+    }
+
+    // Evaluating division first
+    for (let i=0; i<EvArray.length; i++) {
+        if (EvArray[i] == "/") {
+            EvArray[i-1] = EvArray[i-1] / EvArray [i+1]
+            for (let j=i; j<EvArray.length; j++) {
+                EvArray[j] = EvArray [j+2]
+            }
+            EvArray.splice(EvArray.length-2, 2)
+            i = i-2
+        }
+    }
+
+    // Evaluating multiplication
+    for (let i=0; i<EvArray.length; i++) {
+        if (EvArray[i] == "x") {
+            EvArray[i-1] = EvArray[i-1] * EvArray [i+1]
+            for (let j=i; j<EvArray.length; j++) {
+                EvArray[j] = EvArray [j+2]
+            }
+            EvArray.splice(EvArray.length-2, 2)
+            i = i-2
+        }
+    }
+
+    // Evaluating subtraction
+    for (let i=0; i<EvArray.length; i++) {
+        if (EvArray[i] == "-") {
+            EvArray[i-1] = EvArray[i-1] - EvArray [i+1]
+            for (let j=i; j<EvArray.length; j++) {
+                EvArray[j] = EvArray [j+2]
+            }
+            EvArray.splice(EvArray.length-2, 2)
+            i = i-2
+        }
+    }
+
+    // Evaluating addition
+    for (let i=0; i<EvArray.length; i++) {
+        if (EvArray[i] == "+") {
+            EvArray[i-1] = parseFloat(EvArray[i-1]) + parseFloat(EvArray [i+1])
+            for (let j=i; j<EvArray.length; j++) {
+                EvArray[j] = EvArray [j+2]
+            }
+            EvArray.splice(EvArray.length-2, 2)
+            i = i-2
+        }
+    }
+
+    //Displaying Answer
+    outputexpression.innerHTML = EvArray[0]
+    operandchanger = 2
+}
+
+function clearmemory() {
+    operationexpression.innerHTML = ""
+    operation = ""
+    outputexpression.innerHTML = ""
+    operandchanger = 0
 }
