@@ -11,7 +11,7 @@
     background-color: #1e1e1e;
     border-radius: 50px;
     display: grid;
-    grid-template-rows: 30fr 70fr;
+    grid-template-rows: 25fr 75fr;
     grid-template-areas:
     "box"
     "button-grid";
@@ -20,28 +20,27 @@
 .box {
     grid-area: box;
     display: grid;
-    grid-template-rows: 40% 60%;
+    grid-template-rows: 50% 50%;
     grid-template-areas:
     "ipdis"
     "opdis";
 }
 
 .input-display {
-    grid-area: ipdis;
+    grid-area: ipdis;  
     font-family: 'Helvetica';
-    font-size: 40px;
+    font-size: 30px;
     margin-right: 10px;
     text-align: right;
     color: #d3d3d1;
     overflow: auto;
-    
 }
 
 .output-display {
     grid-area: opdis;
     font-family: 'Helvetica';
     font-weight: bold;
-    font-size: 80px;
+    font-size: 70px;
     margin-right: 10px;
     text-align: right;
     color: #d3d3d1;
@@ -74,8 +73,7 @@
 
 .buttons:active {
     background-color: #ffffff;
-    background-size: 100%;
-    transition: background 0.2s;
+    transition: background 0s;
 }
 
 .button-section {

@@ -112,3 +112,46 @@ function clearmemory() {
     outputexpression.innerHTML = ""
     operandchanger = 0
 }
+
+let y
+// Keyboard Inputs
+window.onkeydown = function (e) {
+    y = e.key
+    console.log (y)
+
+    // If number is pressed
+    if (y>=0 || y<=9) {
+        numberinputfunctionkeyboard(y)
+    }
+
+    // If operand is pressed
+    if (y=="+" || y=="-" || y=="*" || y=="/") {
+        operandinputfunctionkeyboard(y)
+    }
+
+    // If enter is pressed
+    if (y=="Enter") {
+        evalfunction()
+    }
+}
+
+function numberinputfunctionkeyboard(z) {
+    if (operandchanger != 2) {
+        operation = operation + z
+        operationexpression.innerHTML = operation
+        operandchanger = 0
+    }
+}
+
+function operandinputfunctionkeyboard(z) {
+    if (operandchanger == 0) {
+        operation = operation + " " + z + " "
+        operationexpression.innerHTML = operation
+        operandchanger = 1
+    }
+    else if (operandchanger == 1) {
+        operation = operation.substr(0, operation.length-3)
+        operation = operation + " " + z + " "
+        operationexpression.innerHTML = operation
+    }
+}
