@@ -7,13 +7,12 @@
     </head>
 
     <body>
-        <h1 class="title-text">Calculator</h1>
-        
+ 
         <div class="container">
             
             <div class="box">
-                <div class="input-display" id="input-display"></div>
-                <div class="output-display" id="output-display"></div>
+                <div class="input-display" id="input-display">x</div>
+                <div class="output-display" id="output-display">x</div>
             </div>
 
             <div class="button-section">
