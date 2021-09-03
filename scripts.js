@@ -101,7 +101,8 @@ function evalfunction() {
     }
 
     //Displaying Answer
-    outputexpression.innerHTML = EvArray[0]
+    let finaloutput = EvArray[0]
+    outputexpression.innerHTML = +finaloutput.toFixed(2)
     operandchanger = 2
 }
 
