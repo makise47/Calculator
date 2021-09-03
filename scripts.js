@@ -115,7 +115,7 @@ function clearmemory() {
 
 let y
 // Keyboard Inputs
-window.onkeydown = function (e) {
+window.onkeypress = function (e) {
     y = e.key
     console.log (y)
 
@@ -123,15 +123,16 @@ window.onkeydown = function (e) {
     if (y>=0 || y<=9) {
         numberinputfunctionkeyboard(y)
     }
-
     // If operand is pressed
-    if (y=="+" || y=="-" || y=="*" || y=="/") {
+    else if (y=="+" || y=="-" || y=="*" || y=="/") {
         operandinputfunctionkeyboard(y)
     }
-
     // If enter is pressed
-    if (y=="Enter") {
+    else if (y=="Enter") {
         evalfunction()
+    }
+    else if (y=="c") {
+        clearmemory()
     }
 }
 
